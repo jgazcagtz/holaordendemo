@@ -1,0 +1,81 @@
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <title>Zentix - HolaOrden™</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <meta name="google-site-verification" content="TfYp_LyD_qligVlnAlM5EGg0imEkcpTQFTnk2yafreo" />
+</head>
+<body>
+
+    <header>
+        <h1>HolaOrden™</h1>
+        <!-- Tutorial Button -->
+        <button id="tutorial-btn">¿Cómo funciona?</button>
+    </header>
+
+    <!-- Tutorial Modal -->
+    <div id="tutorial-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Zentix - HolaOrden™</h2>
+            
+            <ol>
+                <li>Inicia la conversación con el chatbot.</li>
+                <li>Elige una categoría escribiendo el número correspondiente.</li>
+                <li>Selecciona los productos y cantidades que deseas ordenar.</li>
+                <li>Revisa tu carrito y confirma tu pedido.</li>
+                <li>Proporciona tu dirección de entrega y notas adicionales.</li>
+                <li>Elige tu método de pago: PayPal o Pago contra entrega.</li>
+                <li>Confirma tu pedido vía WhatsApp usando el botón verde.</li>
+                <li>¡Disfruta de tu comida! 🍽️</li>
+            </ol>
+        </div>
+    </div>
+
+    <main>
+        <!-- Chatbot Interface -->
+        <div class="chat-container">
+            <div class="chat-window" id="chat-window">
+                <!-- Chat messages will appear here -->
+            </div>
+            <div class="chat-input">
+                <input type="text" id="user-input" placeholder="Escribe tu mensaje..." />
+                <button id="send-btn">Enviar</button>
+            </div>
+        </div>
+
+        <!-- Cart and Payment -->
+        <div class="cart-container" id="cart-container">
+            <h2>Tu Carrito 🛒</h2>
+            <div id="cart-items">
+                <!-- Cart items will be displayed here -->
+            </div>
+            <div id="cart-total">
+                <!-- Total amount -->
+            </div>
+            <div id="paypal-button-container">
+                <!-- PayPal button will be generated here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- WhatsApp Button -->
+    <div class="whatsapp-button">
+        <a href="https://wa.me/525533355687" target="_blank" id="whatsapp-link">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" />
+            Confirmar pedido
+        </a>
+    </div>
+
+    <footer>
+        MINITIENDA EXPRESS © <span id="current-year"></span>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
