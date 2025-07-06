@@ -79,18 +79,19 @@
     <script src="script.js"></script>
     
 <!-- Zentix Chatbot Snippet for Test -->
-<script type="module">
-    // Chatbot configuration
-    const chatbotConfig = {
-        id: "undefined",
-        name: "Test",
-        language: "es",
-        welcomeMessage: "Hello! This is a test!",
-        primaryColor: "#4a6bff",
-        position: "bottom-left",
-        customInstructions: "Use a profeesional tone",
-        apiKey: "zentix_n0qhdnkzfkg5he3doziie8"
-    };
+<!-- This snippet is secure and only contains the necessary configuration -->
+<script>
+    (function() {
+        // Chatbot configuration - only contains public data
+        const chatbotConfig = {
+            id: "undefined",
+            name: "Test",
+            language: "es",
+            welcomeMessage: "Hello! This is a test!",
+            primaryColor: "#4dff82",
+            position: "bottom-left",
+            apiKey: "zentix_n0qhdnkzfkg5he3doziie8"
+        };
 
     // Create chatbot widget
     function createChatbotWidget() {
@@ -182,7 +183,6 @@
                     body: JSON.stringify({
                         message: message,
                         chatbotId: chatbotConfig.id,
-                        language: chatbotConfig.language,
                         apiKey: chatbotConfig.apiKey
                     })
                 });
@@ -206,15 +206,28 @@
                 typingDiv.remove();
                 
                 let errorMessage = 'Sorry, I encountered an error. Please try again.';
-                if (error.message.includes('404')) {
+                
+                // Handle specific error types
+                if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+                    errorMessage = 'Network error. Please check your connection and try again.';
+                } else if (error.message.includes('404')) {
                     errorMessage = 'Chatbot service is temporarily unavailable. Please try again later.';
                 } else if (error.message.includes('429')) {
                     errorMessage = 'Message limit reached. Please try again later.';
                 } else if (error.message.includes('401')) {
                     errorMessage = 'Chatbot authentication failed. Please contact support.';
+                } else if (error.message.includes('402')) {
+                    errorMessage = 'Free trial has expired. Please contact sales to continue using this chatbot.';
+                } else if (error.message.includes('CORS')) {
+                    errorMessage = 'Connection issue. Please refresh the page and try again.';
                 }
                 
                 addMessage(errorMessage, 'bot');
+                
+                // Add a helpful suggestion after error
+                setTimeout(() => {
+                    addMessage('You can also contact us directly at +52 55 3335 5687 for immediate assistance.', 'bot');
+                }, 2000);
             }
         }
     }
@@ -319,7 +332,7 @@
         }
         
         .user-message .message-content {
-            background: #4a6bff;
+            background: #4dff82;
             color: white;
             border-bottom-right-radius: 5px;
         }
@@ -351,7 +364,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background: #4a6bff;
+            background: #4dff82;
             color: white;
             border: none;
             margin-left: 10px;
@@ -379,12 +392,14 @@
     `;
     document.head.appendChild(style);
     
-    // Initialize chatbot when DOM is loaded
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', createChatbotWidget);
-    } else {
-        createChatbotWidget();
-    }
+        // Initialize chatbot when DOM is loaded
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', createChatbotWidget);
+        } else {
+            createChatbotWidget();
+        }
+    })();
+</script>
 </script>
 </body>
 </html>
