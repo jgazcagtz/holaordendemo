@@ -1,27 +1,56 @@
 <html lang="es-MX">
 <head>
     <meta charset="UTF-8">
-    <title>Zentix - HolaOrden™</title>
+    <title>HolaOrden™ - Modern Food Ordering Experience</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="description" content="Modern food ordering experience with AI-powered chatbot assistance">
+    <meta name="keywords" content="food delivery, online ordering, chatbot, restaurant, mexico">
+    <meta name="author" content="HolaOrden">
+    
+    <!-- Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <!-- CSS -->
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- Meta Tags for Modern Web -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="HolaOrden">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://holaorden.com/">
+    <meta property="og:title" content="HolaOrden™ - Modern Food Ordering">
+    <meta property="og:description" content="Experience the future of food ordering with our AI-powered chatbot">
+    <meta property="og:image" content="https://holaorden.com/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://holaorden.com/">
+    <meta property="twitter:title" content="HolaOrden™ - Modern Food Ordering">
+    <meta property="twitter:description" content="Experience the future of food ordering with our AI-powered chatbot">
+    <meta property="twitter:image" content="https://holaorden.com/og-image.jpg">
+    
     <meta name="google-site-verification" content="TfYp_LyD_qligVlnAlM5EGg0imEkcpTQFTnk2yafreo" />
 </head>
 <body>
 
-    <header>
+    <header role="banner">
         <h1>HolaOrden™</h1>
         <!-- Tutorial Button -->
-        <button id="tutorial-btn">¿Cómo funciona?</button>
+        <button id="tutorial-btn" aria-label="Abrir tutorial de cómo usar la aplicación" aria-describedby="tutorial-description">¿Cómo funciona?</button>
+        <div id="tutorial-description" class="sr-only">Botón para abrir el tutorial que explica cómo usar la aplicación de pedidos</div>
     </header>
 
     <!-- Tutorial Modal -->
-    <div id="tutorial-modal" class="modal">
+    <div id="tutorial-modal" class="modal" role="dialog" aria-labelledby="tutorial-title" aria-hidden="true">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Zentix - HolaOrden™</h2>
+            <button class="close" aria-label="Cerrar tutorial">&times;</button>
+            <h2 id="tutorial-title">Zentix - HolaOrden™</h2>
             
             <ol>
                 <li>Inicia la conversación con el chatbot.</li>
@@ -36,42 +65,44 @@
         </div>
     </div>
 
-    <main>
+    <main role="main">
         <!-- Chatbot Interface -->
-        <div class="chat-container">
-            <div class="chat-window" id="chat-window">
+        <section class="chat-container" aria-labelledby="chat-title">
+            <h2 id="chat-title" class="sr-only">Chat de pedidos</h2>
+            <div class="chat-window" id="chat-window" role="log" aria-live="polite" aria-label="Mensajes del chat">
                 <!-- Chat messages will appear here -->
             </div>
-            <div class="chat-input">
-                <input type="text" id="user-input" placeholder="Escribe tu mensaje..." />
-                <button id="send-btn">Enviar</button>
+            <div class="chat-input" role="form" aria-label="Enviar mensaje">
+                <label for="user-input" class="sr-only">Escribe tu mensaje</label>
+                <input type="text" id="user-input" placeholder="Escribe tu mensaje..." aria-label="Campo de texto para escribir mensajes" autocomplete="off" />
+                <button id="send-btn" aria-label="Enviar mensaje">Enviar</button>
             </div>
-        </div>
+        </section>
 
         <!-- Cart and Payment -->
-        <div class="cart-container" id="cart-container">
-            <h2>Tu Carrito 🛒</h2>
-            <div id="cart-items">
+        <aside class="cart-container" id="cart-container" aria-labelledby="cart-title">
+            <h2 id="cart-title">Tu Carrito 🛒</h2>
+            <div id="cart-items" role="list" aria-label="Artículos en el carrito">
                 <!-- Cart items will be displayed here -->
             </div>
-            <div id="cart-total">
+            <div id="cart-total" role="status" aria-live="polite">
                 <!-- Total amount -->
             </div>
-            <div id="paypal-button-container">
+            <div id="paypal-button-container" role="complementary" aria-label="Opciones de pago">
                 <!-- PayPal button will be generated here -->
             </div>
-        </div>
+        </aside>
     </main>
 
     <!-- WhatsApp Button -->
-    <div class="whatsapp-button">
-        <a href="https://wa.me/525533355687" target="_blank" id="whatsapp-link">
+    <div class="whatsapp-button" role="complementary">
+        <a href="https://wa.me/525533355687" target="_blank" id="whatsapp-link" aria-label="Confirmar pedido por WhatsApp">
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp" />
             Confirmar pedido
         </a>
     </div>
 
-    <footer>
+    <footer role="contentinfo">
         MINITIENDA EXPRESS © <span id="current-year"></span>
     </footer>
 

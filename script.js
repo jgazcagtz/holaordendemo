@@ -299,14 +299,25 @@ function showFinalSummary() {
     updateWhatsAppLink();
 }
 
-// Add chat message to the chat window
+// Add chat message to the chat window with modern structure
 function addChatMessage(sender, message) {
     const chatWindow = document.getElementById('chat-window');
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('chat-message', sender);
-    messageDiv.innerText = message;
+    
+    // Create message content wrapper
+    const messageContent = document.createElement('div');
+    messageContent.classList.add('message-content');
+    messageContent.innerHTML = message.replace(/\n/g, '<br>');
+    
+    messageDiv.appendChild(messageContent);
     chatWindow.appendChild(messageDiv);
-    chatWindow.scrollTop = chatWindow.scrollHeight;
+    
+    // Smooth scroll to bottom
+    chatWindow.scrollTo({
+        top: chatWindow.scrollHeight,
+        behavior: 'smooth'
+    });
 }
 
 // Process user message
@@ -430,11 +441,38 @@ function sendMessage() {
     processUserMessage(message);
 }
 
-// Add event listeners
+// Add event listeners with accessibility support
 document.getElementById('send-btn').addEventListener('click', sendMessage);
 document.getElementById('user-input').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         sendMessage();
+    }
+});
+
+// Keyboard navigation support
+document.addEventListener('keydown', function(e) {
+    // Escape key to close modal
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('tutorial-modal');
+        if (modal.style.display === 'block') {
+            closeModal();
+        }
+    }
+    
+    // Focus management for modal
+    if (e.key === 'Tab' && document.getElementById('tutorial-modal').style.display === 'block') {
+        const modal = document.getElementById('tutorial-modal');
+        const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        
+        if (e.shiftKey && document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+        } else if (!e.shiftKey && document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+        }
     }
 });
 
@@ -444,25 +482,33 @@ initializeChatbot();
 // Set current year in footer
 document.getElementById('current-year').innerText = new Date().getFullYear();
 
-// Tutorial Modal Logic
+// Tutorial Modal Logic with Accessibility
 var modal = document.getElementById("tutorial-modal");
 var btn = document.getElementById("tutorial-btn");
 var span = document.getElementsByClassName("close")[0];
 
-// Open the modal
+// Open the modal with accessibility
 btn.onclick = function() {
   modal.style.display = "block";
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  span.focus(); // Focus on close button
 }
 
-// Close the modal
-span.onclick = function() {
+// Close the modal with accessibility
+function closeModal() {
   modal.style.display = "none";
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = 'auto'; // Restore scrolling
+  btn.focus(); // Return focus to trigger button
 }
+
+span.onclick = closeModal;
 
 // Close the modal when clicking outside
-window.onclick = function(event) {
+modal.onclick = function(event) {
   if (event.target == modal) {
-    modal.style.display = "none";
+    closeModal();
   }
 }
 
