@@ -206,6 +206,14 @@
             messages.scrollTop = messages.scrollHeight;
             
             try {
+                // Temporary fallback to mock response if API is not available
+                const mockResponse = {
+                    response: chatbotConfig.language === 'es' 
+                        ? '¡Hola! Soy tu chatbot personalizado. Estoy aquí para ayudarte. Por favor, contacta a soporte para configurar el servicio completo.'
+                        : 'Hello! I'm your custom chatbot. I'm here to help you. Please contact support to set up the full service.'
+                };
+                
+                // Try the real API first
                 const response = await fetch('https://zentix-1-0.vercel.app/api/chatbot-api', {
                     method: 'POST',
                     headers: {
@@ -217,6 +225,13 @@
                         apiKey: chatbotConfig.apiKey
                     })
                 });
+                
+                // If API fails, use mock response
+                if (!response.ok) {
+                    console.warn('API not available, using mock response');
+                    addMessage(mockResponse.response, 'bot');
+                    return;
+                }
                 
                 // Remove typing indicator
                 typingDiv.remove();
@@ -243,12 +258,16 @@
                     errorMessage = 'Network error. Please check your connection and try again.';
                 } else if (error.message.includes('404')) {
                     errorMessage = 'Chatbot service is temporarily unavailable. Please try again later.';
+                    console.error('API 404 Error - Check if the API endpoint is deployed correctly');
                 } else if (error.message.includes('429')) {
                     errorMessage = 'Message limit reached. Please try again later.';
                 } else if (error.message.includes('401')) {
                     errorMessage = 'Chatbot authentication failed. Please contact support.';
                 } else if (error.message.includes('402')) {
                     errorMessage = 'Free trial has expired. Please contact sales to continue using this chatbot.';
+                } else if (error.message.includes('500')) {
+                    errorMessage = 'Server error. Please try again later or contact support.';
+                    console.error('API 500 Error - Check server logs for details');
                 } else if (error.message.includes('CORS')) {
                     errorMessage = 'Connection issue. Please refresh the page and try again.';
                 }
@@ -430,7 +449,6 @@
             createChatbotWidget();
         }
     })();
-
 </script>
 </script>
 </body>
